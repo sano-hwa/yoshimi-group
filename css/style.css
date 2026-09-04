@@ -218,8 +218,12 @@ header {
 
 
 /* ========================================
-  Hero
+  TOP
   ======================================== */
+
+.gradient-bg {
+background: linear-gradient(170deg,rgba(86, 175, 191, 0.1) 0%, rgba(68, 139, 172, 1) 52%, rgba(50, 102, 152, 1) 100%);
+}
 
 .hero {
   position: relative;
@@ -234,7 +238,6 @@ header {
 #c {
   position: absolute;
   inset: 0;
-  z-index: -1;
   object-fit: cover;
 }
 
@@ -283,6 +286,11 @@ header {
   color: var(--color-white);
   text-align: center;
 }
+
+.top-about {
+  height: 2000px;
+}
+
 
 
 /* ========================================
