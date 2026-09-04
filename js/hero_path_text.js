@@ -9,6 +9,7 @@ if (svg && bg && path && textEl && textPath) {
   const COPIES = 6;
   const SPEED = 48;
   const FIGMA_W = 1512;
+  const LOCK_W = 2000;
   const ELLIPSE = { cx: 456, cy: 959, rx: 1666, ry: 778 };
 
   textPath.textContent = PHRASE.repeat(COPIES);
@@ -21,30 +22,39 @@ if (svg && bg && path && textEl && textPath) {
   function layout() {
     const W = svg.clientWidth;
     const H = svg.clientHeight || 1;
-    const sX = W / FIGMA_W;
+    const layoutW = Math.max(W, LOCK_W);
+    const sX = layoutW / FIGMA_W;
     const rx = ELLIPSE.rx * sX;
     const cx = ELLIPSE.cx * sX;
     const ry = ELLIPSE.ry;
     const cy = ELLIPSE.cy;
     const peakY = cy - ry;
+    const shiftX = (W - layoutW) / 2;
 
-    const steps = 64;
+    function yAtLocal(xLocal) {
+      const t = (xLocal - cx) / rx;
+      if (Math.abs(t) >= 1) return peakY;
+      return cy - ry * Math.sqrt(1 - t * t);
+    }
+
+    const steps = 80;
     let bgD = 'M 0 -20';
-    let pathD = '';
     for (let i = 0; i <= steps; i++) {
       const x = (W * i) / steps;
-      const t = (x - cx) / rx;
-      const y = Math.abs(t) < 1
-        ? cy - ry * Math.sqrt(1 - t * t)
-        : peakY;
-      bgD += ` L ${x} ${y}`;
-      pathD += (i === 0 ? `M ${x} ${y}` : ` L ${x} ${y}`);
+      bgD += ` L ${x} ${yAtLocal(x - shiftX)}`;
     }
     bgD += ` L ${W} -20 Z`;
+
+    let pathD = '';
+    for (let i = 0; i <= steps; i++) {
+      const xLocal = (layoutW * i) / steps;
+      pathD += (i === 0 ? 'M ' : ' L ') + (shiftX + xLocal) + ' ' + yAtLocal(xLocal);
+    }
+
     bg.setAttribute('d', bgD);
     path.setAttribute('d', pathD);
     svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
-    svg.setAttribute('preserveAspectRatio', 'xMidYMin meet');
+    svg.setAttribute('preserveAspectRatio', 'none');
   }
 
   function measure() {
