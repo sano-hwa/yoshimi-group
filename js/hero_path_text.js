@@ -20,16 +20,13 @@ if (svg && bg && path && textEl && textPath) {
 
   function layout() {
     const W = svg.clientWidth;
-    const s = W / FIGMA_W;
-    const rx = ELLIPSE.rx * s;
-    const ry = ELLIPSE.ry * s;
-    const cx = ELLIPSE.cx * s;
-    let cy = ELLIPSE.cy * s;
+    const H = svg.clientHeight || 1;
+    const sX = W / FIGMA_W;
+    const rx = ELLIPSE.rx * sX;
+    const cx = ELLIPSE.cx * sX;
+    const ry = ELLIPSE.ry;
+    const cy = ELLIPSE.cy;
     const peakY = cy - ry;
-    const minPeakY = 110;
-    if (peakY < minPeakY) {
-      cy += minPeakY - peakY;
-    }
 
     const steps = 64;
     let bgD = 'M 0 -20';
@@ -46,7 +43,8 @@ if (svg && bg && path && textEl && textPath) {
     bgD += ` L ${W} -20 Z`;
     bg.setAttribute('d', bgD);
     path.setAttribute('d', pathD);
-    svg.setAttribute('viewBox', `0 0 ${W} ${svg.clientHeight || 1}`);
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    svg.setAttribute('preserveAspectRatio', 'xMidYMin meet');
   }
 
   function measure() {
