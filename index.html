@@ -39,6 +39,13 @@
   </header>
   <main>
     <section class="hero">
+      <svg class="hero__path-text" aria-hidden="true">
+        <path id="heroSloganBg" class="hero__path-text-bg" fill="#ffffff" />
+        <path id="heroSloganPath" fill="none" />
+        <text id="heroSloganText">
+          <textPath id="heroSloganTextPath" href="#heroSloganPath" startOffset="0"></textPath>
+        </text>
+      </svg>
       <p class="hero__title">つなぐ力が、<br>
         未来を動かす。</p>
       <p class="hero__catch">物流を中核に、多様な事業を通じて<br>豊かな地域社会づくりに貢献します。</p>
@@ -71,5 +78,6 @@
     <img src="images/common/bnr_100th.svg" alt="100周年記念" class="fixBnr__img">
   </a>
   <script src="js/main_circle.js"></script>
+  <script src="js/hero_path_text.js"></script>
 </body>
 </html>

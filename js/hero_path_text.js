@@ -1,0 +1,94 @@
+const svg = document.querySelector('.hero__path-text');
+const bg = document.getElementById('heroSloganBg');
+const path = document.getElementById('heroSloganPath');
+const textEl = document.getElementById('heroSloganText');
+const textPath = document.getElementById('heroSloganTextPath');
+
+if (svg && bg && path && textEl && textPath) {
+  const PHRASE = 'Connecting People. Moving the Future. ';
+  const COPIES = 6;
+  const SPEED = 48;
+  const FIGMA_W = 1512;
+  const ELLIPSE = { cx: 456, cy: 959, rx: 1666, ry: 778 };
+
+  textPath.textContent = PHRASE.repeat(COPIES);
+
+  let phraseLength = 0;
+  let offset = 0;
+  let last = performance.now();
+  let running = false;
+
+  function layout() {
+    const W = svg.clientWidth;
+    const s = W / FIGMA_W;
+    const rx = ELLIPSE.rx * s;
+    const ry = ELLIPSE.ry * s;
+    const cx = ELLIPSE.cx * s;
+    let cy = ELLIPSE.cy * s;
+    const peakY = cy - ry;
+    const minPeakY = 110;
+    if (peakY < minPeakY) {
+      cy += minPeakY - peakY;
+    }
+
+    const steps = 64;
+    let bgD = 'M 0 -20';
+    let pathD = '';
+    for (let i = 0; i <= steps; i++) {
+      const x = (W * i) / steps;
+      const t = (x - cx) / rx;
+      const y = Math.abs(t) < 1
+        ? cy - ry * Math.sqrt(1 - t * t)
+        : peakY;
+      bgD += ` L ${x} ${y}`;
+      pathD += (i === 0 ? `M ${x} ${y}` : ` L ${x} ${y}`);
+    }
+    bgD += ` L ${W} -20 Z`;
+    bg.setAttribute('d', bgD);
+    path.setAttribute('d', pathD);
+    svg.setAttribute('viewBox', `0 0 ${W} ${svg.clientHeight || 1}`);
+  }
+
+  function measure() {
+    phraseLength = textEl.getComputedTextLength() / COPIES;
+  }
+
+  function tick(now) {
+    if (!running) return;
+    const dt = Math.min(0.05, (now - last) / 1000);
+    last = now;
+    if (phraseLength > 0) {
+      offset = (offset + SPEED * dt) % phraseLength;
+      textPath.setAttribute('startOffset', String(-offset));
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function start() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (running) return;
+    running = true;
+    last = performance.now();
+    requestAnimationFrame(tick);
+  }
+
+  function refresh() {
+    layout();
+    measure();
+  }
+
+  const fontsReady = document.fonts && document.fonts.ready
+    ? document.fonts.ready
+    : Promise.resolve();
+
+  fontsReady.then(() => {
+    refresh();
+    start();
+  });
+
+  if (window.ResizeObserver) {
+    new ResizeObserver(refresh).observe(svg);
+  } else {
+    window.addEventListener('resize', refresh);
+  }
+}
