@@ -13,6 +13,7 @@
 * {
   margin: 0;
   padding: 0;
+  font-size: 16px;
 }
 
 html {
@@ -151,7 +152,130 @@ i {
   outline: none;
 }
 
+/* ========================================
+  Base
+   ======================================== */
+
+:root {
+  --color-brand: #326698;
+  --color-brand-dark: #053e69;
+  --color-text: #242424;
+  --color-white: #ffffff;
+  --font-en: "Figtree", sans-serif;
+  --font-jp: "Noto Sans JP", sans-serif;
+  --inner: 1200px;
+  --header-pad: 30px;
+}
+
+body {
+  font-family: var(--font-jp);
+  color: var(--color-text);
+  background: var(--color-white);
+}
+
+
+
+/* ========================================
+  Header
+  ======================================== */
 
 header {
-  width: calc;
+  width: calc(100% - 60px);
+  position: fixed;
+  top: 30px;
+  left: 30px;
+  z-index: 100;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
 }
+
+
+.gnav {
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.gnavList {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+}
+
+.gnavList__link {
+
+}
+
+/* ========================================
+  Footer
+  ======================================== */
+
+.footer {
+  background: var(--color-brand);
+  color: var(--color-white);
+  padding: 54px 30px 28px;
+}
+
+.footer__inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  width: min(1450px, 100%);
+  margin-inline: auto;
+}
+
+.footer__slogan {
+  font-family: var(--font-en);
+  font-size: 48px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.footer__catch {
+  margin-top: 18px;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.footer__logo {
+  width: 341px;
+  height: auto;
+  margin-top: 36px;
+}
+
+.footer__address {
+  margin-top: 12px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.footer__nav {
+  display: flex;
+  align-items: stretch;
+  padding-left: 42px;
+  border-left: 1px solid rgb(255 255 255 / 55%);
+}
+
+.footer__nav ul {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+}
+
+.footer__nav a {
+  display: block;
+  font-size: 16px;
+  line-height: 32px;
+}
+
+.footer__copy {
+  width: min(1450px, 100%);
+  margin: 42px auto 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
