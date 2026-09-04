@@ -10,10 +10,13 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="movie/main.mp4" type="video/mp4">
+  </video>
   <header>
-    <a href="" class="head__logo">
+    <h1 class="head__logo">
       <img src="images/common/logo-blue.svg" alt="吉見グループ株式会社" class="head__logo-img">
-    </a>
+    </h1>
     <nav class="gnav">
       <ul class="gnavList">
         <li class="gnavList__content">
@@ -35,7 +38,12 @@
     </nav>
   </header>
   <main>
-    
+    <section class="hero">
+      <p class="hero__title">つなぐ力が、<br>
+        未来を動かす。</p>
+      <p class="hero__catch">物流を中核に、多様な事業を通じて<br>豊かな地域社会づくりに貢献します。</p>
+      <canvas id="c"></canvas>
+    </section>
   </main>
 
   <footer class="footer" id="contact">
@@ -59,6 +67,9 @@
     </div>
     <p class="footer__copy">Copyright © 吉見グループ株式会社. All Rights Reserved.</p>
   </footer>
-  <script src="js/main.js"></script>
+  <a href="#" class="fixBnr">
+    <img src="images/common/bnr_100th.svg" alt="100周年記念" class="fixBnr__img">
+  </a>
+  <script src="js/main_circle.js"></script>
 </body>
 </html>
